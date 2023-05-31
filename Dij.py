@@ -1,47 +1,8 @@
 import csv
 import unittest
+from test_file import DijTestCase
 # print("COOL! i know u can do it!!")
-class MyTestCase(unittest.TestCase):
 
-    def setUp(self):
-        self.datas = [
-            ("A","B",2),
-            ("A","D",4),
-            ("B","C",3),
-            ("B","D",1),
-            ("C","D",1)
-        ]
-        
-    # test making graph 
-    def test_making_graph(self):
-        result=makegraph(self.datas)
-        expected_result ={
-            "A":[{'node':"B" ,'dis':2}, {'node':"D" ,'dis':4}],
-            "B":[{'node':"A" ,'dis':2},{'node':"C" ,'dis':3},{'node':"D" ,'dis':1}],
-            "C":[{'node':"B" ,'dis':3},{'node':"D" ,'dis':1}  ],
-            "D":[{'node':"A" ,'dis':4},{'node':"B" ,'dis':1},{'node':"C",'dis':1}]
-         }
-        self.assertEqual(expected_result, result)
-
-    def test_AtoB(self):
-        graph = makegraph(self.datas)
-        start_node = "A"
-        end_node = "B"
-        expected_result = [{'node': 'A', 'dis': 0}, {'node': 'B', 'dis': 2}]
-        distance = Distance(graph,start_node, end_node)
-        result = distance.dijkstra()
-        self.assertEqual(expected_result, result)
-
-    def test_CtoA(self):
-        graph = makegraph(self.datas)
-        start_node = "C"
-        end_node = "A"
-        expected_result = [{'node': 'C', 'dis': 0}, {'node': 'D', 'dis': 1},{'node': 'B', 'dis':2},{'node': 'A', 'dis': 4}]
-        distance = Distance(graph,start_node, end_node)
-        result = distance.dijkstra()
-        self.assertEqual(expected_result, result)
-
-        
 
 class Queue:
     def __init__(self):
@@ -177,6 +138,12 @@ def main():
 
     print("Thank you ^_/\_^")
 
+def test():
+    suite = unittest.TestLoader().loadTestsFromTestCase(DijTestCase)
+    gotest = unittest.TextTestRunner()
+    gotest.run(suite)
+
 if __name__ == "__main__":
+    test()
     main()
-    unittest.main()
+    
